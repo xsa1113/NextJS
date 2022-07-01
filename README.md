@@ -26,3 +26,90 @@
 
 ### LINK
 `import Link from "next/link"` 를 사용하자
+`const router = useRouter()`
+
+### CSS
+`ex) NavBar.module.css` 모듈사용(?) -> 별루
+`style jsx` 가 존재 하지만 `tailwind`가 더좋지 않을까 생각
+
+**_app.js** 처음 렌더링 되는 파일
+
+```
+export default function App({Component, pageProps}) {
+   return (
+       <div>
+        <NavBar/>
+        <Component {...pageProps}/>
+        <span>hello</span>
+       </div>
+    );
+}
+
+```
+
+- 각 컴포넌트 페이지 렌더링
+
+
+### Redirect and Rewrite
+
+- Redirect
+    - 다음과 같이 적어주면 `contact`경로를 적으면 `form`으로 보낸다
+    - next js 지원해주는 기능
+**next.config.js**
+```
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source:"/contact",
+        destination:"/form",
+        permanent: false,
+      }
+    ]
+  }
+}
+
+module.exports = nextConfig
+
+```
+
+- path , *
+
+```
+async redirects() {
+    return [
+      {
+        source:"/old-blog/:path*",
+        destination:"/new-blog"/:path*",
+        permanent: false,
+      }
+    ]
+  }
+```
+
+
+
+### Rewrite
+
+    - redirect처럼 주소를 보내주지만, url은 변경되지 않음
+
+
+### react js router -> /movies/12 처럼 변수받고 싶을때 
+
+ex) -> 폴더 movies , [id].js
+    - 폴더 구조가 곧 router가 되고, 폴더안에 [id].js 파일을 만들게 되면 
+
+    - /movies/12와 같이 받을 수 있다. 
+
+
+
+
+## 결론 
+- next js : react js 사용하던 불편한 요소를 편리하게 바꿔줌, 렌더링 차이와 웹 페이지를 불러온 후 -> react js 처럼 구동 때문에 useState, useEffect를 사용할 수 있다  
+
+- **선택사항**  
+    - 항상 server side rendering을 하고싶나
+    - 데이터가 유효할때 화면을 보여주는게 좋은지
+    - loading화면을 보여준 다음에 데이터를 받는게 좋을지
